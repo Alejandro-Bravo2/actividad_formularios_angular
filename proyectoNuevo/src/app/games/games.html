@@ -1,0 +1,13 @@
+<div class="games-container">
+  <h1>Catálogo Completo de Videojuegos</h1>
+
+  <!-- Sección 1: Lista básica -->
+  <section class="featured-section">
+    <h2>Juegos Destacados</h2>
+    <ul>
+      @for (game of games; track game.id) {
+        <li (click)="fav(game.name)">{{ game.name }}</li>
+      }
+    </ul>
+  </section>
+</div>

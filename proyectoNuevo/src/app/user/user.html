@@ -1,0 +1,17 @@
+@if (is_logged){
+  <p>Bienvenido {{ username }} YA HAS INICIADO SESIÓN </p>
+  <img (click)="greet()"
+    alt="photo" src="https://github.com/kruhale.png">
+
+} @else {
+  <p>Tienes que iniciar sesión</p>
+  <button (click)="is_logged=true">Iniciar sesión</button>
+}
+
+<app-games (addFavoriteEvent)="getFavorite($event)" username="{{username}}"></app-games>
+
+@if (favGame != ''){
+  <p>Tu juego favorito es: {{favGame}}</p>
+
+  <app-comments></app-comments>
+}
