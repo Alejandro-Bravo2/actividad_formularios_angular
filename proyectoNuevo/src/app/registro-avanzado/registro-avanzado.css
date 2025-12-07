@@ -1,0 +1,15 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+span {
+  color: #007bff;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+input[type="checkbox"] {
+  width: auto;
+  margin-right: 8px;
+}

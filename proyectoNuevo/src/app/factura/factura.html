@@ -1,0 +1,64 @@
+<div class="container">
+  <h2>Generador de Facturas</h2>
+
+  <form [formGroup]="facturaForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label>Número de Factura:</label>
+      <input type="text" formControlName="numeroFactura" placeholder="FAC-000001">
+      <div *ngIf="facturaForm.get('numeroFactura')?.invalid && facturaForm.get('numeroFactura')?.touched">
+        <small *ngIf="facturaForm.get('numeroFactura')?.errors?.['formatoFactura']">Formato: FAC-XXXXXX (6 dígitos)</small>
+      </div>
+    </div>
+
+    <div>
+      <label>Fecha:</label>
+      <input type="date" formControlName="fecha">
+    </div>
+
+    <div>
+      <label>Cliente:</label>
+      <input type="text" formControlName="cliente">
+      <div *ngIf="facturaForm.get('cliente')?.invalid && facturaForm.get('cliente')?.touched">
+        <small *ngIf="facturaForm.get('cliente')?.errors?.['required']">Requerido</small>
+      </div>
+    </div>
+
+    <h3>Detalles de Factura</h3>
+
+    <div formArrayName="detalles">
+      <div *ngFor="let detalle of detalles.controls; let i = index" [formGroupName]="i">
+        <div>
+          <label>Producto:</label>
+          <input type="text" formControlName="producto">
+        </div>
+
+        <div>
+          <label>Cantidad:</label>
+          <input type="number" formControlName="cantidad">
+        </div>
+
+        <div>
+          <label>Precio Unitario (€):</label>
+          <input type="number" formControlName="precioUnitario" step="0.01">
+        </div>
+
+        <div>
+          <label>Descuento (%):</label>
+          <input type="number" formControlName="descuento">
+        </div>
+
+        <button type="button" (click)="eliminarDetalle(i)">Eliminar</button>
+      </div>
+    </div>
+
+    <button type="button" (click)="agregarDetalle()">+ Agregar Detalle</button>
+
+    <div *ngIf="detalles.length > 0">
+      <p>Subtotal: {{ calcularSubtotal() | currency:'EUR':'symbol':'1.2-2' }}</p>
+      <p>IVA (21%): {{ calcularIVA() | currency:'EUR':'symbol':'1.2-2' }}</p>
+      <p><strong>Total: {{ calcularTotal() | currency:'EUR':'symbol':'1.2-2' }}</strong></p>
+    </div>
+
+    <button type="submit" [disabled]="facturaForm.invalid || detalles.length === 0">Guardar Factura</button>
+  </form>
+</div>

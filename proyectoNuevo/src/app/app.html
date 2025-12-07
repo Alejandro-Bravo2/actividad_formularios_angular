@@ -1,6 +1,13 @@
-<h1>CABECERA HOLA</h1>
+<div class="app-container">
+  <h1>{{ title }}</h1>
 
+  <nav>
+    <a routerLink="/registro" routerLinkActive="active">Registro</a>
+    <a routerLink="/productos" routerLinkActive="active">Productos</a>
+    <a routerLink="/factura" routerLinkActive="active">Factura</a>
+    <a routerLink="/registro-avanzado" routerLinkActive="active">Registro Avanzado</a>
+    <a routerLink="/perfil-usuario" routerLinkActive="active">Perfil Usuario</a>
+  </nav>
 
-<app-user />
-
-
+  <router-outlet></router-outlet>
+</div>

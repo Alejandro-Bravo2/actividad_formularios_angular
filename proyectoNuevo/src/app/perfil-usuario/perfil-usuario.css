@@ -1,0 +1,30 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+div[formArrayName] > div {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+div[formArrayName] > div h4 {
+  margin-top: 0;
+  color: #495057;
+}
+
+div[formGroupName="informacionPersonal"] {
+  background-color: #e9ecef;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+span {
+  color: #28a745;
+  font-weight: bold;
+  margin-left: 10px;
+}

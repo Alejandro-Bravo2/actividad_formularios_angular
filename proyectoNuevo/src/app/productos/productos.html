@@ -1,0 +1,80 @@
+<div class="container">
+  <h2>Gestor de Productos</h2>
+
+  <form [formGroup]="productosForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label>Nombre del Producto:</label>
+      <input type="text" formControlName="nombre">
+      <div *ngIf="productosForm.get('nombre')?.invalid && productosForm.get('nombre')?.touched">
+        <small *ngIf="productosForm.get('nombre')?.errors?.['required']">Requerido</small>
+        <small *ngIf="productosForm.get('nombre')?.errors?.['minlength']">Mínimo 3 caracteres</small>
+      </div>
+    </div>
+
+    <div>
+      <label>Descripción:</label>
+      <textarea formControlName="descripcion"></textarea>
+      <div *ngIf="productosForm.get('descripcion')?.invalid && productosForm.get('descripcion')?.touched">
+        <small *ngIf="productosForm.get('descripcion')?.errors?.['required']">Requerido</small>
+        <small *ngIf="productosForm.get('descripcion')?.errors?.['maxlength']">Máximo 200 caracteres</small>
+      </div>
+    </div>
+
+    <div>
+      <label>Precio (€):</label>
+      <input type="number" formControlName="precio" step="0.01">
+      <div *ngIf="productosForm.get('precio')?.invalid && productosForm.get('precio')?.touched">
+        <small *ngIf="productosForm.get('precio')?.errors?.['required']">Requerido</small>
+        <small *ngIf="productosForm.get('precio')?.errors?.['min']">Debe ser mayor a 0</small>
+      </div>
+    </div>
+
+    <div>
+      <label>Cantidad:</label>
+      <input type="number" formControlName="cantidad">
+      <div *ngIf="productosForm.get('cantidad')?.invalid && productosForm.get('cantidad')?.touched">
+        <small *ngIf="productosForm.get('cantidad')?.errors?.['required']">Requerido</small>
+        <small *ngIf="productosForm.get('cantidad')?.errors?.['min']">Mínimo 1</small>
+      </div>
+    </div>
+
+    <div>
+      <label>Categoría:</label>
+      <input type="text" formControlName="categoria">
+      <div *ngIf="productosForm.get('categoria')?.invalid && productosForm.get('categoria')?.touched">
+        <small *ngIf="productosForm.get('categoria')?.errors?.['required']">Requerido</small>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="productosForm.invalid">Agregar Producto</button>
+  </form>
+
+  <div *ngIf="productos.length > 0">
+    <h3>Productos Ingresados</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos">
+          <td>{{ producto.id }}</td>
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.descripcion }}</td>
+          <td>{{ producto.precio | currency:'EUR':'symbol':'1.2-2' }}</td>
+          <td>{{ producto.cantidad }}</td>
+          <td>
+            <button (click)="eliminarProducto(producto.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>Total del Inventario: {{ calcularTotal() | currency:'EUR':'symbol':'1.2-2' }}</strong></p>
+  </div>
+</div>

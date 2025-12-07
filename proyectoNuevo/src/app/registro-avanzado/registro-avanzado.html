@@ -1,0 +1,57 @@
+<div class="container">
+  <h2>Registro Avanzado con Validación Asincrónica</h2>
+
+  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label>Username:</label>
+      <input type="text" formControlName="username">
+      <span *ngIf="mostrarCargando('username')">⏳ Verificando...</span>
+      <div *ngIf="validarCampo('username')">
+        <small *ngIf="registroForm.get('username')?.errors?.['required']">Requerido</small>
+        <small *ngIf="registroForm.get('username')?.errors?.['minlength']">Mínimo 3 caracteres</small>
+        <small *ngIf="registroForm.get('username')?.errors?.['usernameReservado']">Username no disponible (reservado)</small>
+      </div>
+    </div>
+
+    <div>
+      <label>Email:</label>
+      <input type="email" formControlName="email">
+      <span *ngIf="mostrarCargando('email')">⏳ Verificando disponibilidad...</span>
+      <div *ngIf="validarCampo('email')">
+        <small *ngIf="registroForm.get('email')?.errors?.['required']">Requerido</small>
+        <small *ngIf="registroForm.get('email')?.errors?.['email']">Email inválido</small>
+        <small *ngIf="registroForm.get('email')?.errors?.['emailExiste']">Este email ya está registrado</small>
+      </div>
+      <div *ngIf="registroForm.get('email')?.pending">
+        <small>Validando disponibilidad del email...</small>
+      </div>
+    </div>
+
+    <div>
+      <label>Contraseña:</label>
+      <input type="password" formControlName="password">
+      <div *ngIf="registroForm.get('password')?.invalid && registroForm.get('password')?.touched">
+        <small *ngIf="registroForm.get('password')?.errors?.['required']">Requerida</small>
+        <small *ngIf="registroForm.get('password')?.errors?.['minlength']">Mínimo 8 caracteres</small>
+      </div>
+    </div>
+
+    <div>
+      <label>
+        <input type="checkbox" formControlName="terminos">
+        Acepto los términos y condiciones
+      </label>
+      <div *ngIf="registroForm.get('terminos')?.invalid && registroForm.get('terminos')?.touched">
+        <small>Debes aceptar los términos</small>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="registroForm.invalid || enviando">
+      {{ enviando ? 'Registrando...' : 'Crear Cuenta' }}
+    </button>
+
+    <div *ngIf="registroForm.pending">
+      <p>Validando información...</p>
+    </div>
+  </form>
+</div>

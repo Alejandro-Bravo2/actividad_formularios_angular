@@ -1,0 +1,18 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+table button {
+  background-color: #dc3545;
+  padding: 5px 10px;
+}
+
+table button:hover {
+  background-color: #c82333;
+}

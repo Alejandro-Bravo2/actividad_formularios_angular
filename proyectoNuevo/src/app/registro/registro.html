@@ -1,74 +1,74 @@
 <div class="container">
   <h2>Formulario de Registro</h2>
-
-  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
-    <!-- Campo Nombre -->
-    <div class="form-group">
-      <label for="nombre">Nombre Completo:</label>
-      <input type="text" id="nombre" formControlName="nombre" class="form-control" />
-
-      <div
-        class="error"
-        *ngIf="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched"
-      >
-        <small *ngIf="registroForm.get('nombre')?.errors?.['required']"
-          >El nombre es requerido</small
-        >
-        <small *ngIf="registroForm.get('nombre')?.errors?.['minlength']">Mínimo 3 caracteres</small>
+  <form #registroForm="ngForm" (ngSubmit)="onSubmit(registroForm)">
+    <div>
+      <label>Nombre Completo:</label>
+      <input
+        type="text"
+        name="nombre"
+        [(ngModel)]="usuario.nombre"
+        #nombre="ngModel"
+        required
+        minlength="3">
+      <div *ngIf="nombre.invalid && nombre.touched">
+        <small *ngIf="nombre.errors?.['required']">El nombre es requerido</small>
+        <small *ngIf="nombre.errors?.['minlength']">Mínimo 3 caracteres</small>
       </div>
     </div>
 
-    <!-- Campo Email -->
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="text" id="email" >
-    </div>
-
-    <!-- Campo Contraseña -->
-    <div class="form-group">
-      <label for="password">Contraseña:</label>
-      <input type="password" id="password" formControlName="password" class="form-control" />
-
-      <div
-        class="error"
-        *ngIf="registroForm.get('password')?.invalid && registroForm.get('password')?.touched"
-      >
-        <small *ngIf="registroForm.get('password')?.errors?.['required']"
-          >La contraseña es requerida</small
-        >
-        <small *ngIf="registroForm.get('password')?.errors?.['minlength']"
-          >Mínimo 6 caracteres</small
-        >
+    <div>
+      <label>Email:</label>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="usuario.email"
+        #email="ngModel"
+        required
+        email>
+      <div *ngIf="email.invalid && email.touched">
+        <small *ngIf="email.errors?.['required']">El email es requerido</small>
+        <small *ngIf="email.errors?.['email']">Formato de email inválido</small>
       </div>
     </div>
 
-    <!-- Campo Confirmar Contraseña -->
-    <div class="form-group">
-      <label for="confirmPassword">Confirmar Contraseña:</label>
+    <div>
+      <label>Contraseña:</label>
       <input
         type="password"
-        id="confirmPassword"
-        formControlName="confirmPassword"
-        class="form-control"
-      />
-
-      <div
-        class="error"
-        *ngIf="
-          registroForm.get('confirmPassword')?.invalid &&
-          registroForm.get('confirmPassword')?.touched
-        "
-      >
-        <small *ngIf="registroForm.get('confirmPassword')?.errors?.['required']"
-          >Confirma tu contraseña</small
-        >
+        name="password"
+        [(ngModel)]="usuario.password"
+        #password="ngModel"
+        required
+        minlength="6">
+      <div *ngIf="password.invalid && password.touched">
+        <small *ngIf="password.errors?.['required']">La contraseña es requerida</small>
+        <small *ngIf="password.errors?.['minlength']">Mínimo 6 caracteres</small>
       </div>
     </div>
 
-    <!-- Botón Submit -->
-    <button type="submit" [disabled]="registroForm.invalid">Registrarse</button>
+    <div>
+      <label>Confirmar Contraseña:</label>
+      <input
+        type="password"
+        name="confirmPassword"
+        [(ngModel)]="usuario.confirmPassword"
+        #confirmPassword="ngModel"
+        required>
+    </div>
 
-    <!-- Mensaje de éxito -->
-    <p class="success" *ngIf="mensajeExito">{{ mensajeExito }}</p>
+    <button type="submit" [disabled]="registroForm.invalid">Registrarse</button>
   </form>
+
+  <div *ngIf="mensajeExito">
+    <p>{{ mensajeExito }}</p>
+  </div>
+
+  <div *ngIf="usuariosRegistrados.length > 0">
+    <h3>Usuarios Registrados</h3>
+    <ul>
+      <li *ngFor="let user of usuariosRegistrados">
+        {{ user.nombre }} - {{ user.email }}
+      </li>
+    </ul>
+  </div>
 </div>

@@ -1,0 +1,20 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+div > div {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+p {
+  color: #28a745;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+ul {
+  margin-top: 20px;
+}

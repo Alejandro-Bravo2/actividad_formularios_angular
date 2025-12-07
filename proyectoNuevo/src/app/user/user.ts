@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import {Games} from '../games/games';
 import {CommonModule} from '@angular/common';
-import {Comments} from '../comments/comments';
 
 @Component({
   selector: 'app-user',
   imports: [
-    Games, CommonModule, Comments
+    Games, CommonModule
   ],
   templateUrl: './user.html',
   styleUrl: './user.css',
